@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Portfolio Study Guide</title>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --accent: #2563eb;
+        --border: #e2e8f0;
+        --code-bg: #0b1020;
+        --code-text: #dbeafe;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 1.2rem;
+      }
+
+      h1, h2, h3 {
+        line-height: 1.25;
+      }
+
+      h1 {
+        margin-bottom: 0.4rem;
+      }
+
+      .lead {
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      ul {
+        margin-top: 0.5rem;
+      }
+
+      li {
+        margin-bottom: 0.35rem;
+      }
+
+      pre {
+        background: var(--code-bg);
+        color: var(--code-text);
+        border-radius: 12px;
+        padding: 0.85rem;
+        overflow-x: auto;
+        font-size: 0.87rem;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .tag {
+        display: inline-block;
+        border: 1px solid #bfdbfe;
+        color: #1d4ed8;
+        padding: 0.1rem 0.5rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        margin-right: 0.35rem;
+        margin-bottom: 0.35rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <h1>React Portfolio Project - Study Guide</h1>
+      <p class="lead">
+        This file explains your portfolio project in beginner-friendly steps, like a client handover + student notes.
+      </p>
+
+      <section class="card">
+        <h2>1) Project Goal</h2>
+        <p>
+          Build an interactive personal portfolio in React that contains your photo, about section, hobbies, education,
+          projects, skills, and contact details.
+        </p>
+        <div>
+          <span class="tag">React Basics</span>
+          <span class="tag">JSX</span>
+          <span class="tag">State Management</span>
+          <span class="tag">Array Mapping</span>
+          <span class="tag">Responsive CSS</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>2) File Structure Used</h2>
+        <pre><code>React-Project/
+|- public/
+|  |- profile.png            // Your profile photo
+|- src/
+|  |- App.jsx                // Main portfolio component
+|  |- App.css                // Component styling
+|  |- index.css              // Global styles
+|  |- main.jsx               // React app entry point
+|- portfolio-study-guide.html // This learning file
+</code></pre>
+      </section>
+
+      <section class="card">
+        <h2>3) Core React Concepts You Used</h2>
+        <ul>
+          <li><strong>useState</strong>: stores values that can change in UI (dark mode, selected skill category).</li>
+          <li><strong>useMemo</strong>: calculates filtered skills efficiently when category changes.</li>
+          <li><strong>map()</strong>: loops through arrays to render hobbies, education, projects, and skills.</li>
+          <li><strong>Conditional class</strong>: adds <code>dark</code> class when dark mode is true.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>4) Important Code - State and Data</h2>
+        <pre><code>import { useMemo, useState } from 'react'
+
+const [activeSkillCategory, setActiveSkillCategory] = useState('All')
+const [darkMode, setDarkMode] = useState(false)
+
+const profile = {
+  name: 'Daiwik Alluru',
+  role: 'Aspiring Software Developer | MERN + AI Enthusiast',
+  photo: '/profile.png',
+}
+</code></pre>
+        <p>
+          <strong>Why this matters:</strong> React re-renders UI when state changes. Clicking buttons changes state, and UI updates automatically.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>5) Important Code - Interactive Skill Filter</h2>
+        <pre><code>const skillGroups = {
+  Languages: ['Java', 'JavaScript', 'TypeScript'],
+  Web: ['React.js', 'Node.js', 'Express.js', 'HTML', 'CSS'],
+}
+
+const filteredSkills = useMemo(() =&gt; {
+  if (activeSkillCategory === 'All') {
+    return Object.entries(skillGroups).flatMap(([group, skills]) =&gt;
+      skills.map((skill) =&gt; ({ group, skill })),
+    )
+  }
+  return skillGroups[activeSkillCategory].map((skill) =&gt; ({
+    group: activeSkillCategory,
+    skill,
+  }))
+}, [activeSkillCategory])
+</code></pre>
+        <p>
+          <strong>How it works:</strong> button click changes <code>activeSkillCategory</code>, then <code>filteredSkills</code> recomputes and the visible list changes.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>6) Important Code - Rendering Lists with map()</h2>
+        <pre><code>{projects.map((project) =&gt; (
+  &lt;article key={project.title} className="project-card"&gt;
+    &lt;h4&gt;{project.title}&lt;/h4&gt;
+    &lt;p&gt;{project.details}&lt;/p&gt;
+    &lt;span&gt;{project.stack}&lt;/span&gt;
+  &lt;/article&gt;
+))}
+</code></pre>
+        <p>
+          <strong>Rule:</strong> Always provide a unique <code>key</code> in mapped elements to help React track items.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>7) Important Code - Dark Mode Toggle</h2>
+        <pre><code>&lt;div className={`portfolio ${darkMode ? 'dark' : ''}`}&gt;
+  &lt;button onClick={() =&gt; setDarkMode((prev) =&gt; !prev)}&gt;
+    {darkMode ? 'Light' : 'Dark'} Mode
+  &lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+        <p>
+          <strong>Idea:</strong> one boolean state controls theme class. CSS handles how dark styles look.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>8) CSS Architecture Used</h2>
+        <ul>
+          <li><strong>Global styles</strong> in <code>src/index.css</code> (font, margin reset, smooth scroll).</li>
+          <li><strong>Component styles</strong> in <code>src/App.css</code> (cards, grid, pills, nav, dark theme).</li>
+          <li><strong>Responsive design</strong> using media query for mobile screens.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>9) How to Run and Study Step-by-Step</h2>
+        <ol>
+          <li>Run project with <code>npm run dev</code>.</li>
+          <li>Open <code>src/App.jsx</code>.</li>
+          <li>Read from top to bottom: imports - states - data arrays - JSX return.</li>
+          <li>Change one thing (example: add one skill) and see live update in browser.</li>
+          <li>Toggle dark mode and inspect class change in browser devtools.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>10) Practice Tasks for You</h2>
+        <ul>
+          <li>Add your real LinkedIn and GitHub URLs.</li>
+          <li>Add one new project card with a demo link.</li>
+          <li>Add one more filter category (example: DevOps).</li>
+          <li>Create a new React component <code>ProjectCard.jsx</code> and move project card code into it.</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+  </html>
