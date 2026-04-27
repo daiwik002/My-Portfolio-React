@@ -11,8 +11,8 @@ function App() {
     bio: 'I build practical web products and AI-powered solutions. I enjoy creating real-world projects that combine clean UI with meaningful backend logic.',
     phone: '+91 7569118451',
     email: 'daiwik.alluru@gmail.com',
-    linkedin: 'https://www.linkedin.com',
-    github: 'https://github.com',
+    linkedin: 'https://www.linkedin.com/in/daiwik-alluru-2061a027b/',
+    github: 'https://github.com/daiwik002',
     photo: '/profile.png',
   }
 
